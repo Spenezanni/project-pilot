@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: teste2
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: T3008LZG
+Implementation-Vendor-Id: br.com.java
+Build-Jdk: 1.8.0_192
+Implementation-URL: http://projects.spring.io/spring-boot/teste2/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
