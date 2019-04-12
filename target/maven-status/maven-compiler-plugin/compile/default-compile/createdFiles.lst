@@ -1,0 +1,6 @@
+br\com\java\project\dto\TarefaDTO.class
+br\com\java\project\controller\TarefaController.class
+br\com\java\project\entity\Tarefa.class
+br\com\java\project\Application.class
+br\com\java\project\repository\TarefaRepository.class
+br\com\java\project\service\TarefaService.class
