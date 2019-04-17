@@ -1,6 +1,5 @@
 package br.com.java.project.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +25,22 @@ public class TarefaController<TarefaRepository> {
 	@PostMapping(value = "/tarefa")
 	@ResponseBody
 	public String adicionaTarefa(@RequestBody TarefaDTO tarefaDTO) {
+		System.out.println("------------------------------------");
 		System.out.println(tarefaDTO.getStatus());
 		Tarefa tarefa = new Tarefa();
 		tarefa.setDescricao(tarefaDTO.getDescricao());
 		tarefa.setStatus(tarefaDTO.getStatus());
-		tarefaService.salvar(tarefa);
+
+		if (tarefa.getStatus().equals("Aberto")) {
+			if (tarefa.getDescricao() == "") {
+				System.out.println("<<<<<<<<<<<<<< Descrição Vazia >>>>>>>>>>>>>>>>");
+			} else {
+				tarefaService.salvar(tarefa);
+			}
+		} else {
+			System.out.println("<<<<<<<<<<<<<< Status Inválido >>>>>>>>>>>>>>>>");
+		}
+
 		return "works";
 	}
 

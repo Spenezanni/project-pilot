@@ -18,6 +18,7 @@ public class TarefaServiceImpl implements TarefaService {
 	@Override
 	public void salvar(Tarefa tarefa) {
 		System.out.println(">>>>>>>>>>>>>>>>>>" + tarefa.toString());
+
 		tarefaRepository.save(tarefa);
 	}
 
@@ -29,18 +30,15 @@ public class TarefaServiceImpl implements TarefaService {
 
 	@Override
 	public List<Tarefa> listar() {
-		/*List<Tarefa> tarefas = new ArrayList<Tarefa>();
-		Tarefa tarefa = new Tarefa();
-		tarefa.setId(123L);
-		tarefa.setStatus("Aberto");
-		tarefa.setDescricao("Comprar");
 
-		tarefas.add(tarefa);
-		tarefas.add(tarefa);
-		tarefas.add(tarefa);
-		tarefas.add(tarefa);
-		tarefas.add(tarefa);*/
-		
+		/*
+		 * List<Tarefa> tarefas = new ArrayList<Tarefa>(); Tarefa tarefa = new
+		 * Tarefa(); tarefa.setId(123tatus("Aberto");
+		 * tarefa.setDescricao("Comprar"); tarefas.add(tarefa);
+		 * tarefas.add(tarefa); tarefas.add(tarefa);L); tarefa.setS
+		 * tarefas.add(tarefa); tarefas.add(tarefa);
+		 */
+
 		return tarefaRepository.findAll();
 	}
 
