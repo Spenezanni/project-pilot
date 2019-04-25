@@ -1,6 +1,5 @@
 package br.com.java.project.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ public class TarefaServiceImpl implements TarefaService {
 	@Override
 	public void salvar(Tarefa tarefa) {
 		System.out.println(">>>>>>>>>>>>>>>>>>" + tarefa.toString());
-
 		tarefaRepository.save(tarefa);
 	}
 

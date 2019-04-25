@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.java.project.dto.TarefaDTO;
 import br.com.java.project.entity.Tarefa;
+import br.com.java.project.error.ResourceBadRequestException;
+import br.com.java.project.error.ResourceCreatedException;
 import br.com.java.project.service.TarefaService;
 
 @Controller
@@ -24,7 +26,7 @@ public class TarefaController<TarefaRepository> {
 
 	@PostMapping(value = "/tarefa")
 	@ResponseBody
-	public String adicionaTarefa(@RequestBody TarefaDTO tarefaDTO) {
+	public void adicionaTarefa(@RequestBody TarefaDTO tarefaDTO) {
 		System.out.println("------------------------------------");
 		System.out.println(tarefaDTO.getStatus());
 		Tarefa tarefa = new Tarefa();
@@ -33,15 +35,14 @@ public class TarefaController<TarefaRepository> {
 
 		if (tarefa.getStatus().equals("Aberto")) {
 			if (tarefa.getDescricao() == "") {
-				System.out.println("<<<<<<<<<<<<<< Descrição Vazia >>>>>>>>>>>>>>>>");
+				throw new ResourceBadRequestException("Inválido!!! A Descrição está vazia!");
 			} else {
 				tarefaService.salvar(tarefa);
 			}
 		} else {
-			System.out.println("<<<<<<<<<<<<<< Status Inválido >>>>>>>>>>>>>>>>");
+			throw new ResourceBadRequestException("Inválido!!! O Status deve estar Aberto.");
 		}
-
-		return "works";
+		throw new ResourceCreatedException("Válido!!! Tarefa Inserida");
 	}
 
 	@DeleteMapping(value = "/tarefa/delete/{id}")
@@ -54,11 +55,11 @@ public class TarefaController<TarefaRepository> {
 	@PutMapping(value = "/tarefa/modifica/{id}")
 	@ResponseBody
 	public String modificaTarefa(@PathVariable long id, @RequestBody TarefaDTO tarefaDTO) {
-		System.out.println(tarefaDTO.getStatus());
-		System.out.println(id);
+		//System.out.println(tarefaDTO.getStatus());
+		//System.out.println(id);
 		Tarefa tarefa = new Tarefa();
-		tarefa.setDescricao(tarefaDTO.getDescricao());
 		tarefa.setStatus(tarefaDTO.getStatus());
+		tarefa.setDescricao(tarefaDTO.getDescricao());
 		tarefa.setId(id);
 		tarefaService.salvar(tarefa);
 		return "Tarefa Modificada";
@@ -67,7 +68,6 @@ public class TarefaController<TarefaRepository> {
 	@GetMapping(value = "/tarefas")
 	@ResponseBody
 	public List<Tarefa> listar() {
-
 		return tarefaService.listar();
 	}
 

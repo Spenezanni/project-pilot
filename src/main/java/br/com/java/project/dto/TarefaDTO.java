@@ -1,6 +1,5 @@
 package br.com.java.project.dto;
 
-import javax.persistence.Column;
 
 public class TarefaDTO {
 
