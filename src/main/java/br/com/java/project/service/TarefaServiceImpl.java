@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.java.project.entity.Tarefa;
+import br.com.java.project.error.ResourceNotFoundException;
 import br.com.java.project.repository.TarefaRepository;
 
 @Service
@@ -40,4 +41,25 @@ public class TarefaServiceImpl implements TarefaService {
 		return tarefaRepository.findAll();
 	}
 
+	@Override
+	public void verificacaoIdTarefaExiste(long id) {
+		Tarefa tarefa = tarefaRepository.findOne(id);
+		if (tarefa == null) {
+			throw new ResourceNotFoundException("Id de Tarefa não existe");
+		}
+	}
+
+	@Override
+	public void verificacaoStatusTarefaExiste(Tarefa tarefa) {
+
+		if (tarefa.getStatus().equals("Fechado")) {
+			throw new ResourceNotFoundException("Status não permitido");
+		}
+		if (tarefa.getDescricao() == "") {
+			throw new ResourceNotFoundException("Descrição não pode ser vazia!");
+		} else {
+			System.out.println("Tudo bem com o Status!!!");
+		}
+
+	}
 }

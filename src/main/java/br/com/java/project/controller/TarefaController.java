@@ -18,12 +18,14 @@ import br.com.java.project.error.ResourceBadRequestException;
 import br.com.java.project.error.ResourceCreatedException;
 import br.com.java.project.service.TarefaService;
 
+
 @Controller
 public class TarefaController<TarefaRepository> {
 
 	@Autowired
 	private TarefaService tarefaService;
-
+	
+	
 	@PostMapping(value = "/tarefa")
 	@ResponseBody
 	public void adicionaTarefa(@RequestBody TarefaDTO tarefaDTO) {
@@ -33,7 +35,7 @@ public class TarefaController<TarefaRepository> {
 		tarefa.setDescricao(tarefaDTO.getDescricao());
 		tarefa.setStatus(tarefaDTO.getStatus());
 
-		if (tarefa.getStatus().equals("Aberto")) {
+		if (tarefa.getStatus().equals("Aberto") || tarefa.getStatus().equals("ABERTO")) {
 			if (tarefa.getDescricao() == "") {
 				throw new ResourceBadRequestException("Inválido!!! A Descrição está vazia!");
 			} else {
@@ -51,18 +53,23 @@ public class TarefaController<TarefaRepository> {
 		tarefaService.deletar(id);
 		return "Tarefa Deletada";
 	}
+	
 
 	@PutMapping(value = "/tarefa/modifica/{id}")
 	@ResponseBody
 	public String modificaTarefa(@PathVariable long id, @RequestBody TarefaDTO tarefaDTO) {
-		//System.out.println(tarefaDTO.getStatus());
-		//System.out.println(id);
+		// System.out.println(tarefaDTO.getStatus());
+		// System.out.println(id);
+	    tarefaService.verificacaoIdTarefaExiste(id);
+	    
 		Tarefa tarefa = new Tarefa();
-		tarefa.setStatus(tarefaDTO.getStatus());
-		tarefa.setDescricao(tarefaDTO.getDescricao());
 		tarefa.setId(id);
+		tarefa.setStatus(tarefaDTO.getStatus());
+		tarefa.setDescricao(tarefaDTO.getDescricao());	
+		tarefaService.verificacaoStatusTarefaExiste(tarefa);
+		
 		tarefaService.salvar(tarefa);
-		return "Tarefa Modificada";
+		return "Tarefa Modificada  com Sucesso!!!";
 	}
 
 	@GetMapping(value = "/tarefas")
@@ -71,4 +78,6 @@ public class TarefaController<TarefaRepository> {
 		return tarefaService.listar();
 	}
 
+
 }
+

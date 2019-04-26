@@ -10,5 +10,6 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 	
 	void delete(Long id);
 	
+	
 
 }
