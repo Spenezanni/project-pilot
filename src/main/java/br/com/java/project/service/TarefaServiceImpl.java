@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.java.project.entity.Tarefa;
+import br.com.java.project.error.ResourceBadRequestException;
 import br.com.java.project.error.ResourceNotFoundException;
 import br.com.java.project.repository.TarefaRepository;
 
@@ -52,14 +53,13 @@ public class TarefaServiceImpl implements TarefaService {
 	@Override
 	public void verificacaoStatusTarefaExiste(Tarefa tarefa) {
 
-		if (tarefa.getStatus().equals("Fechado")) {
-			throw new ResourceNotFoundException("Status não permitido");
+		if (tarefa.getStatus().equals("Aberto")) {
+			System.out.println("Status Sucesso!!!");
+		} else if (tarefa.getStatus().equals("Fechado") || tarefa.getStatus() != "Aberto") {
+			throw new ResourceBadRequestException("Status não permitido");
 		}
 		if (tarefa.getDescricao() == "") {
-			throw new ResourceNotFoundException("Descrição não pode ser vazia!");
-		} else {
-			System.out.println("Tudo bem com o Status!!!");
+			throw new ResourceBadRequestException("Descrição não pode ser vazia!");
 		}
-
 	}
 }
