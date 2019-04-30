@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.java.project.dto.TarefaDTO;
+import br.com.java.project.dto.UsuarioDTO;
 import br.com.java.project.entity.Tarefa;
+import br.com.java.project.entity.Usuario;
 import br.com.java.project.error.ResourceBadRequestException;
 import br.com.java.project.error.ResourceCreatedException;
 import br.com.java.project.service.TarefaService;
@@ -45,7 +47,7 @@ public class TarefaController<TarefaRepository> {
 		throw new ResourceCreatedException("Válido!!! Tarefa Inserida");
 	}
 
-	@DeleteMapping(value = "/tarefa/delete/{id}")
+	@DeleteMapping(value = "/tarefa/{id}")
 	@ResponseBody
 	public String deletar(@PathVariable long id) {
 		tarefaService.verificacaoIdTarefaExiste(id);
@@ -53,7 +55,7 @@ public class TarefaController<TarefaRepository> {
 		return "Tarefa Deletada";
 	}
 
-	@PutMapping(value = "/tarefa/modifica/{id}")
+	@PutMapping(value = "/tarefa/{id}")
 	@ResponseBody
 	public String modificaTarefa(@PathVariable long id, @RequestBody TarefaDTO tarefaDTO) {
 		// System.out.println(tarefaDTO.getStatus());
@@ -64,7 +66,7 @@ public class TarefaController<TarefaRepository> {
 		tarefa.setId(id);
 		tarefa.setStatus(tarefaDTO.getStatus());
 		tarefa.setDescricao(tarefaDTO.getDescricao());
-		
+
 		tarefaService.verificacaoStatusTarefaExiste(tarefa);
 
 		tarefaService.salvar(tarefa);
@@ -77,4 +79,17 @@ public class TarefaController<TarefaRepository> {
 		return tarefaService.listar();
 	}
 
+	@PostMapping(value = "/usuario")
+	@ResponseBody
+	public void salvarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+		System.out.println("------------------------------------");
+		//System.out.println(UsuarioDTO.getUsuario());0
+		Usuario usuario = new Usuario();
+		usuario.setUsuario(usuarioDTO.getUsuario());
+		usuario.setLogin(usuarioDTO.getLogin());
+		usuario.setEmail(usuarioDTO.getEmail());
+		usuario.setSenha(usuarioDTO.getSenha());	
+		
+		tarefaService.salvarUsuario(usuario);
+	}
 }

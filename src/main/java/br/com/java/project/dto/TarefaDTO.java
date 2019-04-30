@@ -9,7 +9,7 @@ public class TarefaDTO {
 	
 	public TarefaDTO(){
 		
-	};
+	}
 
 	public TarefaDTO(String status, String descricao) {
 		this.status = status;

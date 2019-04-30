@@ -1,26 +1,40 @@
 package br.com.java.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.java.project.entity.Tarefa;
+import br.com.java.project.entity.Usuario;
 import br.com.java.project.error.ResourceBadRequestException;
 import br.com.java.project.error.ResourceNotFoundException;
 import br.com.java.project.repository.TarefaRepository;
+import br.com.java.project.repository.UsuarioRepository;
 
 @Service
 public class TarefaServiceImpl implements TarefaService {
 
 	@Autowired
 	private TarefaRepository tarefaRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@Override
 	public void salvar(Tarefa tarefa) {
 		System.out.println(">>>>>>>>>>>>>>>>>>" + tarefa.toString());
 		tarefaRepository.save(tarefa);
 	}
+	
+	@Override
+	public void salvarUsuario(Usuario usuario) {
+		System.out.println(">>>>>>>>>>>>>>>>>>" + usuario.toString());
+		usuarioRepository.save(usuario);
+	}
+	
+	
 
 	@Override
 	public void deletar(Long id) {
@@ -30,15 +44,6 @@ public class TarefaServiceImpl implements TarefaService {
 
 	@Override
 	public List<Tarefa> listar() {
-
-		/*
-		 * List<Tarefa> tarefas = new ArrayList<Tarefa>(); Tarefa tarefa = new
-		 * Tarefa(); tarefa.setId(123tatus("Aberto");
-		 * tarefa.setDescricao("Comprar"); tarefas.add(tarefa);
-		 * tarefas.add(tarefa); tarefas.add(tarefa);L); tarefa.setS
-		 * tarefas.add(tarefa); tarefas.add(tarefa);
-		 */
-
 		return tarefaRepository.findAll();
 	}
 
@@ -49,17 +54,27 @@ public class TarefaServiceImpl implements TarefaService {
 			throw new ResourceNotFoundException("Id de Tarefa não existe");
 		}
 	}
-
+	
 	@Override
 	public void verificacaoStatusTarefaExiste(Tarefa tarefa) {
 
 		if (tarefa.getStatus().equals("Aberto")) {
 			System.out.println("Status Sucesso!!!");
-		} else if (tarefa.getStatus().equals("Fechado") || tarefa.getStatus() != "Aberto") {
+		} else if (tarefa.getStatus().equals("Fechado")) {
+			System.out.println("Status Sucesso!!!");
+		}else if(tarefa.getStatus() != "Aberto"){
 			throw new ResourceBadRequestException("Status não permitido");
 		}
 		if (tarefa.getDescricao() == "") {
 			throw new ResourceBadRequestException("Descrição não pode ser vazia!");
 		}
 	}
+
+	@Override
+	public void autenticacao(Usuario usuario) {
+		
+		if(usuario.getLogin().equals(usuario.getLogin()) && usuario.getSenha().equals(usuario.getSenha()));
+					
+	}
+	
 }
