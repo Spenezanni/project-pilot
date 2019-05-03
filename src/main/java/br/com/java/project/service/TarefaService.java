@@ -20,7 +20,7 @@ public interface TarefaService {
 
 	public void salvarUsuario(Usuario usuario);
 	
-	public void autenticacao(Usuario usuario);
+	public Usuario login(Usuario usuario);
 	
 
 }

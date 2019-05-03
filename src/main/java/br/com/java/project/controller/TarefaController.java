@@ -2,6 +2,8 @@ package br.com.java.project.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.java.project.dto.TarefaDTO;
@@ -19,8 +22,10 @@ import br.com.java.project.entity.Usuario;
 import br.com.java.project.error.ResourceBadRequestException;
 import br.com.java.project.error.ResourceCreatedException;
 import br.com.java.project.service.TarefaService;
+import io.jsonwebtoken.Jwts;
 
 @Controller
+@RequestMapping("/admin")
 public class TarefaController<TarefaRepository> {
 
 	@Autowired
@@ -58,7 +63,7 @@ public class TarefaController<TarefaRepository> {
 	@PutMapping(value = "/tarefa/{id}")
 	@ResponseBody
 	public String modificaTarefa(@PathVariable long id, @RequestBody TarefaDTO tarefaDTO) {
-		// System.out.println(tarefaDTO.getStatus());
+		// System.out.println(tarefaDTO.getStatus());S
 		// System.out.println(id);
 		tarefaService.verificacaoIdTarefaExiste(id);
 
@@ -79,17 +84,4 @@ public class TarefaController<TarefaRepository> {
 		return tarefaService.listar();
 	}
 
-	@PostMapping(value = "/usuario")
-	@ResponseBody
-	public void salvarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-		System.out.println("------------------------------------");
-		//System.out.println(UsuarioDTO.getUsuario());0
-		Usuario usuario = new Usuario();
-		usuario.setUsuario(usuarioDTO.getUsuario());
-		usuario.setLogin(usuarioDTO.getLogin());
-		usuario.setEmail(usuarioDTO.getEmail());
-		usuario.setSenha(usuarioDTO.getSenha());	
-		
-		tarefaService.salvarUsuario(usuario);
-	}
 }

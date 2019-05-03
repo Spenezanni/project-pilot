@@ -10,9 +10,4 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 	Tarefa save(Usuario usuario);
 	
 	void delete(Long id);
-
-	
-	
-	
-
 }

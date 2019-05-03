@@ -1,9 +1,9 @@
 package br.com.java.project.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.java.project.entity.Tarefa;
@@ -18,7 +18,7 @@ public class TarefaServiceImpl implements TarefaService {
 
 	@Autowired
 	private TarefaRepository tarefaRepository;
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
@@ -27,14 +27,12 @@ public class TarefaServiceImpl implements TarefaService {
 		System.out.println(">>>>>>>>>>>>>>>>>>" + tarefa.toString());
 		tarefaRepository.save(tarefa);
 	}
-	
+
 	@Override
 	public void salvarUsuario(Usuario usuario) {
 		System.out.println(">>>>>>>>>>>>>>>>>>" + usuario.toString());
 		usuarioRepository.save(usuario);
 	}
-	
-	
 
 	@Override
 	public void deletar(Long id) {
@@ -54,7 +52,7 @@ public class TarefaServiceImpl implements TarefaService {
 			throw new ResourceNotFoundException("Id de Tarefa não existe");
 		}
 	}
-	
+
 	@Override
 	public void verificacaoStatusTarefaExiste(Tarefa tarefa) {
 
@@ -62,7 +60,7 @@ public class TarefaServiceImpl implements TarefaService {
 			System.out.println("Status Sucesso!!!");
 		} else if (tarefa.getStatus().equals("Fechado")) {
 			System.out.println("Status Sucesso!!!");
-		}else if(tarefa.getStatus() != "Aberto"){
+		} else if (tarefa.getStatus() != "Aberto") {
 			throw new ResourceBadRequestException("Status não permitido");
 		}
 		if (tarefa.getDescricao() == "") {
@@ -71,10 +69,11 @@ public class TarefaServiceImpl implements TarefaService {
 	}
 
 	@Override
-	public void autenticacao(Usuario usuario) {
+	public Usuario login(Usuario usuario) {
 		
-		if(usuario.getLogin().equals(usuario.getLogin()) && usuario.getSenha().equals(usuario.getSenha()));
-					
+		Usuario user = usuarioRepository.findByLogin(usuario.getLogin());
+				
+		return user;
 	}
-	
+
 }
