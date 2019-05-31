@@ -15,26 +15,20 @@ public class Tarefa {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	/*public Tarefa() {
-		super();
-	}
-
-	public Tarefa(String status, String descricao) {
-		super();
-		this.status = status;
-		this.descricao = descricao;
-	}*/
-
 	@Column(name = "status")
 	private String status;
 	
 	@Column(name = "descricao")
 	private String descricao;
+	
+	@Column(name= "status2")
+	private String status2;
 
+	
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -54,6 +48,15 @@ public class Tarefa {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public String getStatus2() {
+		return status2;
+	}
+
+	public void setStatus2(String status2) {
+		this.status2 = status2;
+	}
+	
 	
 	
 

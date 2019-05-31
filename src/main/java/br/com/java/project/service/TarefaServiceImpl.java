@@ -1,9 +1,9 @@
 package br.com.java.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.java.project.entity.Tarefa;
@@ -70,10 +70,34 @@ public class TarefaServiceImpl implements TarefaService {
 
 	@Override
 	public Usuario login(Usuario usuario) {
-		
+
 		Usuario user = usuarioRepository.findByLogin(usuario.getLogin());
-				
+
 		return user;
 	}
 
+	@Override
+	public void verificacaoIdUsuarioExiste(String login) {
+		Usuario usuario = usuarioRepository.findOne(login);
+		if (usuario == null) {
+			throw new ResourceNotFoundException("Id de Tarefa não existe");
+		}
+	}
+
+	@Override
+	public void deletarUsuario(String login) {
+
+		System.out.println(">>>>>>>>>>>>>>>>>>");
+		usuarioRepository.delete(login);
+	}
+
+	@Override
+	public void validarCamposUsuario(Usuario usuario) {
+
+		if (usuario.getUsuario() == "" || usuario.getEmail() == "" || usuario.getLogin() == ""
+				|| usuario.getSenha() == "") {
+			throw new ResourceBadRequestException("Não pode haver campos em branco!!!");
+
+		}
+	}
 }

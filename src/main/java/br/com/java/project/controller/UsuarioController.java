@@ -4,6 +4,8 @@ import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,10 +29,12 @@ public class UsuarioController {
 		Usuario usuario = new Usuario();
 		usuario.setUsuario(usuarioDTO.getUsuario());
 		usuario.setLogin(usuarioDTO.getLogin());
-		usuario.setEmail(usuarioDTO.getEmail());
+		usuario.setEmail(usuarioDTO.getEmail()); 
 		usuario.setSenha(usuarioDTO.getSenha());
 
+		tarefaService.validarCamposUsuario(usuario);
 		tarefaService.salvarUsuario(usuario);
+		
 	}
 
 	@PostMapping(value = "/autenticar")
@@ -44,7 +48,7 @@ public class UsuarioController {
 		usuario.setSenha(usuarioDTO.getSenha());
 		usuario.setEmail(usuarioDTO.getEmail());
 
-		if (usuario.getLogin() == null && usuario.getSenha() == null) {
+		if (usuario.getLogin() == null || usuario.getSenha() == null) {
 			throw new ServletException("Login e senha Obrigatórios");
 		}
 
@@ -66,5 +70,15 @@ public class UsuarioController {
 
 		return new LoginResponse(token);
 	}
+	
+	@DeleteMapping(value = "/usuario/{login}")
+	@ResponseBody
+	public String deletar(@PathVariable String login) {
+		tarefaService.verificacaoIdUsuarioExiste(login);
+		tarefaService.deletarUsuario(login);
+		return "Usuario Deletado";
+	}
+	
+	
 
 }

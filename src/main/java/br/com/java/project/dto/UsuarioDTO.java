@@ -7,6 +7,10 @@ public class UsuarioDTO {
 	private String email;
 	private String senha;
 
+	public UsuarioDTO() {
+		
+	}
+	
 	public UsuarioDTO(String usuario, String login, String email, String senha) {
 		super();
 		this.usuario = usuario;
@@ -15,9 +19,6 @@ public class UsuarioDTO {
 		this.senha = senha;
 	}
 
-	public UsuarioDTO() {
-
-	}
 
 	public String getUsuario() {
 		return usuario;
@@ -50,5 +51,7 @@ public class UsuarioDTO {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	
 
 }

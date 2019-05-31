@@ -12,10 +12,14 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String> {
 
 	Usuario save(Usuario usuario);
 	
+	Usuario findBySenha(String senha);
+
+
+	
+    void delete(String login);
+
 	Usuario findOne(String login);
 	
-	Usuario findBySenha(String senha);
-	
-	
+
 
 }
